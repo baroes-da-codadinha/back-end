@@ -22,7 +22,14 @@ const cadastrarUsuario = async (req, res) => {
             return res.status(404).json('Usuário não foi cadastrado');
         }
         
-        const dadosRestaurante = await knex('restaurantes').insert({ usuario_id: usuario[0].id, nome: restaurante.nome, descricao: restaurante.descricao, categoria_id: restaurante.idCategoria, taxa_entrega: restaurante.taxaEntrega, tempo_entrega_minutos: restaurante.tempoEntregaMinutos, valor_minimo_pedido: restaurante.valorMinimoPedido }).returning('*');
+        const dadosRestaurante = await knex('restaurantes').insert({ 
+            usuario_id: usuario[0].id, 
+            nome: restaurante.nome, 
+            descricao: restaurante.descricao, 
+            categoria_id: restaurante.idCategoria, 
+            taxa_entrega: restaurante.taxaEntrega, 
+            tempo_entrega_minutos: restaurante.tempoEntregaMinutos, 
+            valor_minimo_pedido: restaurante.valorMinimoPedido }).returning('*');
 
         if (!dadosRestaurante) {
             return res.status(404).json('Restaurante não foi cadastrado');
