@@ -2,11 +2,14 @@ const knex = require('../conexao');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const senhaHash = require('../senhaHash');
+const schemaLoginUsuario = require('../validacoes/schemaLoginUsuario');
 
 const login = async (req, res) => {
     const { email, senha } = req.body;
 
     try {
+        await schemaLoginUsuario.validate(req.body);
+        
         const usuario = await knex('usuarios').where({ email: email }).first();
 
         if (!usuario) {
