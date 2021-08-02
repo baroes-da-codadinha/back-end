@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS produtos;
 CREATE TABLE produtos (
   id serial NOT NULL PRIMARY KEY,
   restaurante_id integer NOT NULL,
-  nome varchar(50) NOT NULL,
+  nome varchar(50) NOT NULL UNIQUE,
   descricao varchar(100),
   preco integer NOT NULL,
   ativo boolean NOT NULL DEFAULT TRUE,
