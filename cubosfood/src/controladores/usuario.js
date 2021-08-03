@@ -41,4 +41,16 @@ const cadastrarUsuario = async (req, res) => {
     }
 };
 
-module.exports = cadastrarUsuario;
+const obterUsuario = async (req, res) => {
+    try {
+        return res.status(200).json(req.restaurante);
+        
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
+module.exports = {
+    cadastrarUsuario,
+    obterUsuario
+};
