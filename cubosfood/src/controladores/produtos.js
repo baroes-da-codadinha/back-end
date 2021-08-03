@@ -87,7 +87,7 @@ const deletarProduto = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const encontrarProduto = await knex('produtos').where({ id: id, restaurante_id: restaurante.id, ativo: true }).first();
+        const encontrarProduto = await knex('produtos').where({ id: id, restaurante_id: restaurante.id}).first();
 
         if (!encontrarProduto) {
             return res.status(404).json('Produto não foi encontrado.');
