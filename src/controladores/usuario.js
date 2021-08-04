@@ -43,7 +43,17 @@ const cadastrarUsuario = async (req, res) => {
 
 const obterUsuario = async (req, res) => {
     try {
-        return res.status(200).json(req.restaurante);
+        const { usuario, restaurante } = req;
+
+        const categoria = await knex('categorias').where({ id: restaurante.categoria_id}).first();
+
+        const resposta = {
+            usuario,
+            restaurante,
+            categoria
+        }
+
+        return res.status(200).json(resposta);
         
     } catch (error) {
         return res.status(400).json(error.message);
