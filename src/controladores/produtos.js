@@ -52,7 +52,7 @@ const cadastrarProdutos = async (req, res) => {
 
         return res.status(200).json();
     } catch (error) {
-        return res.statu(400).json(error.message);
+        return res.status(400).json(error.message);
     }
 };
 

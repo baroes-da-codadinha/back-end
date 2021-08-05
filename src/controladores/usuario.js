@@ -7,29 +7,30 @@ const cadastrarUsuario = async (req, res) => {
 
     try {
         await schemaCadastroUsuario.validate(req.body);
-        
+
         const verificarEmailUsuario = await knex('usuarios').where({ email: email }).first();
 
-        if(verificarEmailUsuario) {
+        if (verificarEmailUsuario) {
             return res.status(404).json('Email informado já possui cadastro.');
         }
 
         const senhaCritptografada = await bcrypt.hash(senha, 10);
 
         const usuario = await knex('usuarios').insert({ nome: nome, email: email, senha: senhaCritptografada }).returning('*');
-        
+
         if (!usuario) {
             return res.status(404).json('Usuário não foi cadastrado');
         }
-        
-        const dadosRestaurante = await knex('restaurantes').insert({ 
-            usuario_id: usuario[0].id, 
-            nome: restaurante.nome, 
-            descricao: restaurante.descricao, 
-            categoria_id: restaurante.idCategoria, 
-            taxa_entrega: restaurante.taxaEntrega, 
-            tempo_entrega_minutos: restaurante.tempoEntregaMinutos, 
-            valor_minimo_pedido: restaurante.valorMinimoPedido }).returning('*');
+
+        const dadosRestaurante = await knex('restaurantes').insert({
+            usuario_id: usuario[0].id,
+            nome: restaurante.nome,
+            descricao: restaurante.descricao,
+            categoria_id: restaurante.idCategoria,
+            taxa_entrega: restaurante.taxaEntrega,
+            tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
+            valor_minimo_pedido: restaurante.valorMinimoPedido
+        }).returning('*');
 
         if (!dadosRestaurante) {
             return res.status(404).json('Restaurante não foi cadastrado');
@@ -43,7 +44,17 @@ const cadastrarUsuario = async (req, res) => {
 
 const obterUsuario = async (req, res) => {
     try {
-        return res.status(200).json(req.restaurante);
+        const { usuario, restaurante } = req;
+
+        const categoria = await knex('categorias').where({ id: restaurante.categoria_id }).first();
+
+        const resposta = {
+            usuario,
+            restaurante,
+            categoria
+        }
+
+        return res.status(200).json(resposta);
     } catch (error) {
         return res.status(400).json(error.message);
     }

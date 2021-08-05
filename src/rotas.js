@@ -1,4 +1,5 @@
 const express = require('express');
+const { uploadImagem } = require('./controladores/imagens');
 const { login } = require('./controladores/login');
 const { cadastrarProdutos, listarProdutos, atualizarProduto, deletarProduto, ativarProduto, desativarProduto, obterProduto } = require('./controladores/produtos');
 const { cadastrarUsuario, obterUsuario } = require('./controladores/usuario');
@@ -26,5 +27,8 @@ rotas.post('/produtos/:id/desativar', desativarProduto);
 
 // OBTER USUARIO
 rotas.get('/usuarios', obterUsuario);
+
+// ROTAS DE IMAGEM
+rotas.post('/imagem', uploadImagem)
 
 module.exports = rotas;
