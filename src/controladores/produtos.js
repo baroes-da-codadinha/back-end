@@ -59,7 +59,7 @@ const cadastrarProdutos = async (req, res) => {
 const atualizarProduto = async (req, res) => {
     const { restaurante } = req;
     const { id } = req.params;
-    const { nome, descricao, preco, permiteObservacoes } = req.body;
+    const { nome, descricao, preco, ativo, permiteObservacoes } = req.body;
 
     try {
         await schemaAtualizarProduto.validate(req.body);
@@ -70,7 +70,7 @@ const atualizarProduto = async (req, res) => {
             return res.status(404).json('Produto não foi encontrado.');
         }
 
-        const produto = await knex('produtos').update({ nome: nome, descricao: descricao, preco: preco, permite_observacoes: permiteObservacoes }).where({ id: id }).returning('*');
+        const produto = await knex('produtos').update({ nome: nome, descricao: descricao, preco: preco, ativo: ativo, permite_observacoes: permiteObservacoes }).where({ id: id }).returning('*');
 
         if (!produto) {
             return res.status(404).json('Não foi possível atualizar produto.');
