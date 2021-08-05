@@ -28,7 +28,7 @@ rotas.post('/produtos/:id/desativar', desativarProduto);
 // OBTER USUARIO
 rotas.get('/usuarios', obterUsuario);
 
-// ROTAS DE IMAGEM
+// ROTAS DE IMAGENS
 rotas.post('/imagem', uploadImagem)
 
 module.exports = rotas;
