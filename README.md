@@ -75,3 +75,31 @@ Endpoint para atender a funcionalidade de criar um novo usuário para o dashboar
 Endpoint para realização de login dos usuários no dashboard, de forma que realize:
 * A validação das credenciais do usuário (e-mail e senha), retornando mensagens adequadas quando as credenciais não forem válidas
 * A autenticação dos usuários, gerando e retornando token válido como resposta
+
+### GET /produtos
+
+Endpoint para retornar uma lista de todos os produtos cadastrados naquele restaurante.
+
+### GET /produtos/:id
+
+Endpoint para retornar os detalhes de um produto em específico. 
+
+### POST /produtos
+
+Endpoint para cadastrar um novo produto. Deverá receber um objeto JSON representando o produto (conforme formato no exemplo abaixo) e deverá cadastrá-lo no banco de dados relacionado ao restaurante.
+
+### PUT /produtos/:id
+
+Endpoint para alterar os dados de um produto em específico. Deverá receber um objeto JSON representando o produto com os novos dados que se deseja persistir em banco de dados conforme formato no exemplo abaixo.
+
+### DELETE /produtos/:id
+
+Endpoint para excluir um produto existente. Não deverá receber conteúdo no corpo da requisição, mas deverá receber o ID do produto através de parâmetro de rota (params).
+
+### POST /produtos/:id/ativar
+
+Endpoint para ativar um produto existente. Não deverá receber conteúdo no corpo da requisição, mas deverá receber o ID do produto como parâmetro de rota (params) conforme assinatura do endpoint no título acima.
+
+### POST /produtos/:id/desativar
+
+Endpoint para ativar um produto existente. Não deverá receber conteúdo no corpo da requisição, mas deverá receber o ID do produto como parâmetro de rota (params) conforme assinatura do endpoint no título acima.

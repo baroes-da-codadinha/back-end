@@ -18,7 +18,7 @@ rotas.use(verificarLogin);
 
 // ROTAS DE PRODUTOS
 rotas.get('/produtos', listarProdutos);
-rotas.get('/produtos/:id', obterProduto)
+rotas.get('/produtos/:id', obterProduto);
 rotas.post('/produtos', cadastrarProdutos);
 rotas.put('/produtos/:id', atualizarProduto);
 rotas.delete('/produtos/:id', deletarProduto);
