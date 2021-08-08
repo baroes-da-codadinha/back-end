@@ -1,9 +1,9 @@
 const express = require('express');
-const { uploadImagem } = require('./controladores/imagens');
 const { login } = require('./controladores/login');
 const { cadastrarProdutos, listarProdutos, atualizarProduto, deletarProduto, ativarProduto, desativarProduto, obterProduto } = require('./controladores/produtos');
-const { cadastrarUsuario, obterUsuario } = require('./controladores/usuario');
+const { cadastrarUsuario, obterUsuario, atualizarUsuario } = require('./controladores/usuario');
 const verificarLogin = require('./filtros/verificarLogin');
+const { uploadImagem, updateImagem } = require('./controladores/imagens');
 
 const rotas = express();
 
@@ -25,10 +25,12 @@ rotas.delete('/produtos/:id', deletarProduto);
 rotas.post('/produtos/:id/ativar', ativarProduto);
 rotas.post('/produtos/:id/desativar', desativarProduto);
 
-// OBTER USUARIO
+// ROTAS DE USUÁRIO PROTEGIDAS
 rotas.get('/usuarios', obterUsuario);
+rotas.put('/usuarios/:id', atualizarUsuario);
 
 // ROTAS DE IMAGENS
 rotas.post('/imagem', uploadImagem)
+rotas.put('/imagem', updateImagem)
 
 module.exports = rotas;
