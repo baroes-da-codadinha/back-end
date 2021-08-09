@@ -1,6 +1,7 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
 const schemaCadastroUsuario = require('../validacoes/schemaCadastroUsuario');
+const schemaAtualizarUsuario = require('../validacoes/schemaAtualizarUsuario')
 
 const cadastrarUsuario = async (req, res) => {
     const { nome, email, senha, restaurante } = req.body;
@@ -65,6 +66,8 @@ const atualizarUsuario = async (req, res) => {
     const { nome, email, senha,  restaurante } = req.body;
     
     try {
+        await schemaAtualizarUsuario.validate(req.body);
+
         const verificarUsuario = await knex('usuarios').where({ id }).first();
 
         if(!verificarUsuario) {
@@ -77,30 +80,38 @@ const atualizarUsuario = async (req, res) => {
             senhaCriptografada = await bcrypt.hash(senha, 10);
         }
 
-        const dadosUsuario = await knex('usuarios').update({
-            nome,
-            email,
-            senhaCriptografada
-        }).returning('*');
 
-        if(!dadosUsuario) {
-            return res.status(404).json('Não foi possível concluir a atualização.');
+        if(nome || email || senha){
+            const dadosUsuario = await knex('usuarios').update({
+                nome,
+                email,
+                senha: senhaCriptografada,
+            }).returning('*');
+    
+            if(!dadosUsuario) {
+                return res.status(404).json('Não foi possível concluir a atualização.');
+            }
         }
         
-        const dadosRestaurante = await knex('restaurantes').update({
-            usuario_id: verificarUsuario.id,
-            nome: restaurante.nome,
-            descricao: restaurante.descricao,
-            categoria_id: restaurante.idCategoria,
-            taxa_entrega: restaurante.taxaEntrega,
-            tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
-            valor_minimo_pedido: restaurante.valorMinimoPedido,
-            url_imagem: restaurante.urlImagem,
-        }).returning('*');
 
-        if(!dadosRestaurante) {
-            return res.status(404).json('Não foi possível concluir a atualização.');
+        if (restaurante) {
+            const dadosRestaurante = await knex('restaurantes').update({
+                usuario_id: verificarUsuario.id,
+                nome: restaurante.nome,
+                descricao: restaurante.descricao,
+                categoria_id: restaurante.idCategoria,
+                taxa_entrega: restaurante.taxaEntrega,
+                tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
+                valor_minimo_pedido: restaurante.valorMinimoPedido,
+                url_imagem: restaurante.urlImagem,
+            }).returning('*');
+
+            if(!dadosRestaurante) {
+                return res.status(404).json('Não foi possível concluir a atualização.');
+            }
         }
+
+        
 
         return res.status(200).json();
     } catch (error) {

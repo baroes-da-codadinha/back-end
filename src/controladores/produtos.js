@@ -1,6 +1,5 @@
 const knex = require('../conexao');
-const schemaAtualizarProduto = require('../validacoes/schemaAtualizarProduto');
-const schemaCadastroProduto = require('../validacoes/schemaCadastrarProduto');
+const schemaProduto = require('../validacoes/schemaProduto');
 
 const listarProdutos = async (req, res) => {
     const { restaurante } = req;
@@ -36,7 +35,7 @@ const cadastrarProdutos = async (req, res) => {
     const { nome, descricao, preco, permiteObservacoes, urlImagem } = req.body;
 
     try {
-        await schemaCadastroProduto.validate(req.body);
+        await schemaProduto.validate(req.body);
 
         const verificarNomeProduto = await knex('produtos').where({ nome: nome, restaurante_id: restaurante.id }).first();
 
@@ -62,7 +61,7 @@ const atualizarProduto = async (req, res) => {
     const { nome, descricao, preco, ativo, permiteObservacoes, urlImagem } = req.body;
 
     try {
-        await schemaAtualizarProduto.validate(req.body);
+        await schemaProduto.validate(req.body);
 
         const encontrarProduto = await knex('produtos').where({ id, restaurante_id: restaurante.id});
 
