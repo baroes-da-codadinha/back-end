@@ -93,7 +93,7 @@ const deletarProduto = async (req, res) => {
             return res.status(404).json('Produto não foi encontrado.');
         }
 
-        if (encontrarProduto) {
+        if (encontrarProduto.ativo === true) {
             return res.status(404).json('Produto está com status ativo.')
         }
 
