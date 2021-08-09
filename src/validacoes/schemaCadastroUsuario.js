@@ -9,7 +9,8 @@ const schemaCadastroUsuario = yup.object().shape({
         idCategoria: yup.number().required('Informe a categoria do restaurante.'),
         taxaEntrega: yup.number().required('Informe a taxa de entrega.'),
         tempoEntregaMinutos: yup.number().required('Informe o tempo de entrega.'),
-        valorMinimoPedido: yup.number().required('Informe o valor mínimo do pedido.')
+        valorMinimoPedido: yup.number().required('Informe o valor mínimo do pedido.'),
+        url_imagem: yup.string()
     })
 });
 

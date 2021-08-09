@@ -62,7 +62,7 @@ const obterUsuario = async (req, res) => {
 
 const atualizarUsuario = async (req, res) => {
     const { id } = req.params;
-    const { nome, email, senha,  restaurante, urlImagem } = req.body;
+    const { nome, email, senha,  restaurante } = req.body;
     
     try {
         const verificarUsuario = await knex('usuarios').where({ id }).first();
@@ -95,7 +95,7 @@ const atualizarUsuario = async (req, res) => {
             taxa_entrega: restaurante.taxaEntrega,
             tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
             valor_minimo_pedido: restaurante.valorMinimoPedido,
-            urlImagem
+            url_imagem: restaurante.urlImagem,
         }).returning('*');
 
         if(!dadosRestaurante) {
