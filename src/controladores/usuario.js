@@ -96,7 +96,6 @@ const atualizarUsuario = async (req, res) => {
 
         if (restaurante) {
             const dadosRestaurante = await knex('restaurantes').update({
-                usuario_id: verificarUsuario.id,
                 nome: restaurante.nome,
                 descricao: restaurante.descricao,
                 categoria_id: restaurante.idCategoria,
@@ -104,7 +103,7 @@ const atualizarUsuario = async (req, res) => {
                 tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
                 valor_minimo_pedido: restaurante.valorMinimoPedido,
                 url_imagem: restaurante.urlImagem,
-            }).returning('*');
+            }).where({usuario_id: verificarUsuario.id}).returning('*');
 
             if(!dadosRestaurante) {
                 return res.status(404).json('Não foi possível concluir a atualização.');
