@@ -94,7 +94,7 @@ const atualizarUsuario = async (req, res) => {
         }
         
 
-        if (restaurante) {
+        if (restaurante.nome || restaurante.descricao || restaurante.idCategoria || restaurante.taxaEntrega || restaurante.tempoEntregaMinutos || restaurante.valorMinimoPedido || restaurante.valorMinimoPedido || restaurante.urlImagem) {
             const dadosRestaurante = await knex('restaurantes').update({
                 nome: restaurante.nome,
                 descricao: restaurante.descricao,
