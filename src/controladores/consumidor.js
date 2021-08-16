@@ -8,32 +8,18 @@ const cadastrarConsumidor = async (req, res) => {
     try {
         await schemaCadastroConsumidor.validate(req.body);
 
-        const verificarEmailUsuario = await knex('usuarios').where({ email: email }).first();
+        const verificarEmailConsumidor = await knex('consumidor').where({ email: email }).first();
 
-        if (verificarEmailUsuario) {
+        if (verificarEmailConsumidor) {
             return res.status(404).json('Email informado já possui cadastro.');
         }
 
         const senhaCritptografada = await bcrypt.hash(senha, 10);
 
-        const usuario = await knex('usuarios').insert({ nome: nome, email: email, senha: senhaCritptografada }).returning('*');
+        const consumidor = await knex('consumidor').insert({ nome, email, telefone, senha: senhaCritptografada }).returning('*');
 
-        if (!usuario) {
+        if (!consumidor) {
             return res.status(404).json('Usuário não foi cadastrado');
-        }
-
-        const dadosRestaurante = await knex('restaurantes').insert({
-            usuario_id: usuario[0].id,
-            nome: restaurante.nome,
-            descricao: restaurante.descricao,
-            categoria_id: restaurante.idCategoria,
-            taxa_entrega: restaurante.taxaEntrega,
-            tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
-            valor_minimo_pedido: restaurante.valorMinimoPedido
-        }).returning('*');
-
-        if (!dadosRestaurante) {
-            return res.status(404).json('Restaurante não foi cadastrado');
         }
 
         return res.status(200).json('Usuário cadastrado com sucesso.');
