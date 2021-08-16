@@ -14,8 +14,8 @@ rotas.post('/usuarios', cadastrarUsuario);
 rotas.post('/consumidor', cadastrarConsumidor);
 
 // LOGIN
-rotas.post('/usuarios/login', loginUsuario);
-rotas.post('/consumidor/login', loginConsumidor);
+rotas.post('/login-usuario', loginUsuario);
+rotas.post('/login-consumidor', loginConsumidor);
 
 
 // MIDDLEWARE QUE VERIFICA LOGIN
