@@ -1,7 +1,8 @@
 const express = require('express');
-const { login } = require('./controladores/login');
+const { loginUsuario, loginConsumidor } = require('./controladores/login');
 const { cadastrarProdutos, listarProdutos, atualizarProduto, deletarProduto, ativarProduto, desativarProduto, obterProduto } = require('./controladores/produtos');
 const { cadastrarUsuario, obterUsuario, atualizarUsuario } = require('./controladores/usuario');
+const { cadastrarConsumidor } = require('./controladores/consumidor')
 const { listarRestaurantes } = require('./controladores/restaurantes')
 const verificarLogin = require('./filtros/verificarLogin');
 const { uploadImagem, updateImagem } = require('./controladores/imagens');
@@ -10,9 +11,12 @@ const rotas = express();
 
 // USUÁRIO
 rotas.post('/usuarios', cadastrarUsuario);
+rotas.post('/consumidor', cadastrarConsumidor);
 
 // LOGIN
-rotas.post('/login', login);
+rotas.post('/usuarios/login', loginUsuario);
+rotas.post('/consumidor/login', loginConsumidor);
+
 
 // MIDDLEWARE QUE VERIFICA LOGIN
 rotas.use(verificarLogin);
