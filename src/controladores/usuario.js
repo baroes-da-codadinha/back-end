@@ -86,7 +86,7 @@ const atualizarUsuario = async (req, res) => {
                 nome,
                 email,
                 senha: senhaCriptografada,
-            }).returning('*');
+            }).where({ id }).returning('*');
     
             if(!dadosUsuario) {
                 return res.status(404).json('Não foi possível concluir a atualização.');
