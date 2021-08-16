@@ -14,15 +14,16 @@ rotas.post('/usuarios', cadastrarUsuario);
 rotas.post('/consumidor', cadastrarConsumidor);
 
 // LOGIN
-rotas.post('/usuario-login', loginUsuario);
-rotas.post('/consumidor-login', loginConsumidor);
+rotas.post('/login-usuario', loginUsuario);
+rotas.post('/login-consumidor', loginConsumidor);
+
+
+// ROTAS DE RESTAURANTES
+rotas.post('/restaurantes', listarRestaurantes);
 
 
 // MIDDLEWARE QUE VERIFICA LOGIN
 rotas.use(verificarLogin);
-
-// ROTAS DE RESTAURANTES
-rotas.get('/restaurantes', listarRestaurantes);
 
 // ROTAS DE PRODUTOS
 rotas.get('/produtos', listarProdutos);
