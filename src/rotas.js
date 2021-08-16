@@ -3,7 +3,7 @@ const { loginUsuario, loginConsumidor } = require('./controladores/login');
 const { cadastrarProdutos, listarProdutos, atualizarProduto, deletarProduto, ativarProduto, desativarProduto, obterProduto } = require('./controladores/produtos');
 const { cadastrarUsuario, obterUsuario, atualizarUsuario } = require('./controladores/usuario');
 const { cadastrarConsumidor } = require('./controladores/consumidor')
-const { listarRestaurantes } = require('./controladores/restaurantes')
+const { listarRestaurantes, listarProdutosRestaurantes } = require('./controladores/restaurantes')
 const verificarLogin = require('./filtros/verificarLogin');
 const { uploadImagem, updateImagem } = require('./controladores/imagens');
 
@@ -20,6 +20,7 @@ rotas.post('/login-consumidor', loginConsumidor);
 
 // ROTAS DE RESTAURANTES
 rotas.post('/restaurantes', listarRestaurantes);
+rotas.get('/restaurantes/:id', listarProdutosRestaurantes);
 
 
 // MIDDLEWARE QUE VERIFICA LOGIN
