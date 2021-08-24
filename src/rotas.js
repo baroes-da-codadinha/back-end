@@ -2,18 +2,20 @@ const express = require('express');
 const { loginUsuario } = require('./controladores/login');
 const { cadastrarProdutos, listarProdutos, atualizarProduto, deletarProduto, ativarProduto, desativarProduto, obterProduto } = require('./controladores/produtos');
 const { cadastrarUsuario, obterUsuario, atualizarUsuario } = require('./controladores/usuario');
-const { cadastrarConsumidor } = require('./controladores/consumidor')
 const verificarLogin = require('./filtros/verificarLogin');
 const { uploadImagem, updateImagem } = require('./controladores/imagens');
+const { listarCategorias } = require('./controladores/categoria');
 
 const rotas = express();
 
 // USUÁRIO
 rotas.post('/usuarios', cadastrarUsuario);
-rotas.post('/consumidor', cadastrarConsumidor);
 
 // LOGIN
 rotas.post('/login-usuario', loginUsuario);
+
+// CATEGORIAS 
+rotas.get('/categorias', listarCategorias);
 
 
 // MIDDLEWARE QUE VERIFICA LOGIN
