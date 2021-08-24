@@ -17,6 +17,8 @@ const cadastrarUsuario = async (req, res) => {
 
         const senhaCritptografada = await bcrypt.hash(senha, 10);
 
+        const placeholderImg = 'https://fhfmgjnasgrddtfwgquj.supabase.in/storage/v1/object/public/cubosfood/placeholders/avatar.png'
+
         const usuario = await knex('usuarios').insert({ nome: nome, email: email, senha: senhaCritptografada }).returning('*');
 
         if (!usuario) {
@@ -30,7 +32,8 @@ const cadastrarUsuario = async (req, res) => {
             categoria_id: restaurante.idCategoria,
             taxa_entrega: restaurante.taxaEntrega,
             tempo_entrega_minutos: restaurante.tempoEntregaMinutos,
-            valor_minimo_pedido: restaurante.valorMinimoPedido
+            valor_minimo_pedido: restaurante.valorMinimoPedido,
+            url_imagem: placeholderImg 
         }).returning('*');
 
         if (!dadosRestaurante) {
