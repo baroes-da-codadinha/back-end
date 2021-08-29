@@ -5,7 +5,7 @@ const listarPedidos = async (req, res) => {
     const { entregue } = req.params;
 
     try {
-        const pedidos = await knex('pedidos').where({ restaurante_id: restaurante.id, entregue } ) ;
+        const pedidos = await knex('pedidos').where({ restaurante_id: restaurante.id, entregue, enviado: false } ).orderBy('id', 'desc') ;
 
         for (const pedido of pedidos) {
             pedido.consumidor = await knex('consumidor').where({ id: pedido.consumidor_id }).first();
@@ -28,7 +28,7 @@ const enviarPedido = async (req, res) => {
             .where({ restaurante_id: restaurante.id, id })
             .update({ enviado: true }).returning('*');
 
-        if (enviarPedido.lenght === 0) {
+        if (enviarPedido.length === 0) {
             return res.status(400).json('Não foi possível enviar o pedido!');
         }
 
