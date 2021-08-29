@@ -2,20 +2,14 @@ const knex = require('../conexao');
 
 const listarPedidos = async (req, res) => {
     const { restaurante } = req;
+    const { entregue } = req.params;
 
     try {
-        if (req.params.entregue) {
-            const pedidos = await knex('pedido').where({ restaurante_id: restaurante.id, entregue: true });
-        } else if (!req.params.entregue) {
-            const pedidos = await knex('pedido').where(() => {
-                this.where({ restaurante_id: restaurante.id, entregue: false })
-                orWhere({ restaurante_id: restaurante.id, entregue: null })
-            });
-        }
+        const pedidos = await knex('pedidos').where({ restaurante_id: restaurante.id, entregue } ) ;
 
         for (const pedido of pedidos) {
             pedido.consumidor = await knex('consumidor').where({ id: pedido.consumidor_id }).first();
-            pedido.endereço = await knex('endereco').where({ id: pedido.endereco_id }).first();
+            pedido.endereco = await knex('endereco').where({ id: pedido.endereco_id }).first();
             pedido.itens = await knex('itens').where({ pedidos_id: pedido.id })
         }
 
@@ -30,11 +24,11 @@ const enviarPedido = async (req, res) => {
     const { id } = req.params
 
     try {
-        const enviarPedido = await knex('pedido')
+        const enviarPedido = await knex('pedidos')
             .where({ restaurante_id: restaurante.id, id })
-            .update({ enviado: true });
+            .update({ enviado: true }).returning('*');
 
-        if (!enviarPedido){
+        if (enviarPedido.lenght === 0) {
             return res.status(400).json('Não foi possível enviar o pedido!');
         }
 
