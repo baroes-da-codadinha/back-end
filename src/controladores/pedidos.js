@@ -5,7 +5,7 @@ const listarPedidos = async (req, res) => {
     const { entregue } = req.params;
 
     try {
-        const pedidos = await knex('pedidos').where({ restaurante_id: restaurante.id, entregue, enviado: false } ).orderBy('id', 'desc') ;
+        const pedidos = await knex('pedidos').where({ restaurante_id: restaurante.id, enviado: entregue } ).orderBy('id', 'asc') ;
 
         for (const pedido of pedidos) {
             pedido.consumidor = await knex('consumidor').where({ id: pedido.consumidor_id }).first();
